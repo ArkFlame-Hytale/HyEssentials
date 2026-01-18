@@ -2,8 +2,8 @@ plugins {
     id 'java'
 }
 
-group = 'com.example'
-version = '1.0-SNAPSHOT'
+group = 'com.arkflame'
+version = '1.0.0'
 
 repositories {
     mavenCentral()
