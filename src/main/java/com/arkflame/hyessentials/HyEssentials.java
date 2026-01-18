@@ -1,5 +1,6 @@
 package com.arkflame.hyessentials;
 
+import com.hypixel.hytale.logger.HytaleLogger;
 import com.arkflame.hyessentials.config.ConfigManager;
 import com.arkflame.hyessentials.config.LanguageManager;
 import com.arkflame.hyessentials.economy.DummyEconomy;
@@ -16,14 +17,15 @@ import com.arkflame.hyessentials.commands.*;
  * @version 1.0.0
  */
 public class HyEssentials extends JavaPlugin {
-    
+
     private static HyEssentials instance;
-    
+    private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+
     // Core Systems
     private TaskRunner taskRunner;
     private ConfigManager configManager;
     private LanguageManager languageManager;
-    
+
     // Managers
     private PermissionManager permissionManager;
     private UserDataManager userDataManager;
@@ -36,88 +38,88 @@ public class HyEssentials extends JavaPlugin {
     private MuteManager muteManager;
     private IgnoreManager ignoreManager;
     private BackManager backManager;
-    
+
     // Economy
     private IEconomy economy;
-    
+
     // Module System
     private ModuleManager moduleManager;
-    
+
     @Override
     protected void setup() {
         instance = this;
-        
+
         long startTime = System.currentTimeMillis();
-        getLogger().info("===================================");
-        getLogger().info("  HyEssentials v1.0.0");
-        getLogger().info("  by ArkFlame Development");
-        getLogger().info("===================================");
-        
+        LOGGER.atInfo().log("===================================");
+        LOGGER.atInfo().log("  HyEssentials v" + this.getManifest().getVersion().toString());
+        LOGGER.atInfo().log("  by ArkFlame Development");
+        LOGGER.atInfo().log("===================================");
+
         // Initialize core systems
         initializeCoreSystem();
-        
+
         // Initialize managers
         initializeManagers();
-        
+
         // Initialize economy
         initializeEconomy();
-        
+
         // Load modules
         initializeModules();
-        
+
         // Register commands
         registerCommands();
-        
+
         // Register events
         registerEvents();
-        
+
         long loadTime = System.currentTimeMillis() - startTime;
-        getLogger().info("HyEssentials loaded successfully in " + loadTime + "ms!");
-        getLogger().info("===================================");
+        LOGGER.atInfo().log("HyEssentials loaded successfully in " + loadTime + "ms!");
+        LOGGER.atInfo().log("===================================");
     }
-    
+
     @Override
     protected void shutdown() {
-        getLogger().info("Shutting down HyEssentials...");
-        
+        LOGGER.atInfo().log("Shutting down HyEssentials...");
+
         // Save all data
         if (userDataManager != null) {
             userDataManager.saveAll();
         }
-        
+
         // Disable all modules
         if (moduleManager != null) {
             moduleManager.disableAll();
         }
-        
+
         // Shutdown task runner
         if (taskRunner != null) {
             taskRunner.shutdown();
         }
-        
-        getLogger().info("HyEssentials disabled successfully!");
+
+        LOGGER.atInfo().log("HyEssentials disabled successfully!");
     }
-    
+
     private void initializeCoreSystem() {
-        getLogger().info("Initializing core systems...");
-        
+        LOGGER.atInfo().log("Initializing core systems...");
+
         // Task runner for async operations
         this.taskRunner = new TaskRunner(this);
-        
+
         // Configuration manager
         this.configManager = new ConfigManager(this);
         this.configManager.loadConfig();
-        
+
         // Language manager
         this.languageManager = new LanguageManager(this);
         this.languageManager.loadLanguages();
-        
-        getLogger().info("Core systems initialized!");
+
+        LOGGER.atInfo().log("Core systems initialized!");
     }
-    
+
     private void initializeManagers() {
-        getLogger().info("Initializing managers...");
-        
+        LOGGER.atInfo().log("Initializing managers...");
+
         this.permissionManager = new PermissionManager(this);
         this.userDataManager = new UserDataManager(this);
         this.teleportManager = new TeleportManager(this);
@@ -129,30 +131,30 @@ public class HyEssentials extends JavaPlugin {
         this.muteManager = new MuteManager(this);
         this.ignoreManager = new IgnoreManager(this);
         this.backManager = new BackManager(this);
-        
+
         // Load data
         permissionManager.load();
         warpManager.load();
         spawnManager.load();
         kitManager.load();
-        
-        getLogger().info("Managers initialized!");
+
+        LOGGER.atInfo().log("Managers initialized!");
     }
-    
+
     private void initializeEconomy() {
-        getLogger().info("Initializing economy system...");
-        
+        LOGGER.atInfo().log("Initializing economy system...");
+
         // For now, use dummy economy until Vault is available
         this.economy = new DummyEconomy();
-        
-        getLogger().info("Economy system initialized (Dummy mode - Vault not available)");
+
+        LOGGER.atInfo().log("Economy system initialized (Dummy mode - Vault not available)");
     }
-    
+
     private void initializeModules() {
-        getLogger().info("Loading modules...");
-        
+        LOGGER.atInfo().log("Loading modules...");
+
         this.moduleManager = new ModuleManager(this);
-        
+
         // Register all modules
         moduleManager.registerModule(new JoinLeaveModule(this));
         moduleManager.registerModule(new GamemodeModule(this));
@@ -169,81 +171,81 @@ public class HyEssentials extends JavaPlugin {
         moduleManager.registerModule(new KitModule(this));
         moduleManager.registerModule(new BasicCommandsModule(this));
         moduleManager.registerModule(new TimeModule(this));
-        
+
         // Enable all modules
         moduleManager.enableAll();
-        
-        getLogger().info("Modules loaded: " + moduleManager.getEnabledModules().size());
+
+        LOGGER.atInfo().log("Modules loaded: " + moduleManager.getEnabledModules().size());
     }
-    
+
     private void registerCommands() {
-        getLogger().info("Registering commands...");
-        
+        LOGGER.atInfo().log("Registering commands...");
+
         // Permission commands
         getCommandRegistry().registerCommand(new PermissionCommand(this));
-        
+
         // Teleport commands
         getCommandRegistry().registerCommand(new TpaCommand(this));
         getCommandRegistry().registerCommand(new TpacceptCommand(this));
         getCommandRegistry().registerCommand(new TpadenyCommand(this));
         getCommandRegistry().registerCommand(new TpahereCommand(this));
-        
+
         // Home commands
         getCommandRegistry().registerCommand(new HomeCommand(this));
         getCommandRegistry().registerCommand(new SethomeCommand(this));
         getCommandRegistry().registerCommand(new DelhomeCommand(this));
         getCommandRegistry().registerCommand(new HomesCommand(this));
-        
+
         // Warp commands
         getCommandRegistry().registerCommand(new WarpCommand(this));
         getCommandRegistry().registerCommand(new SetwarpCommand(this));
         getCommandRegistry().registerCommand(new DelwarpCommand(this));
-        
+
         // Spawn commands
         getCommandRegistry().registerCommand(new SpawnCommand(this));
         getCommandRegistry().registerCommand(new SetspawnCommand(this));
-        
+
         // Back command
         getCommandRegistry().registerCommand(new BackCommand(this));
-        
+
         // Gamemode command
         getCommandRegistry().registerCommand(new GamemodeCommand(this));
-        
+
         // Give command
         getCommandRegistry().registerCommand(new GiveCommand(this));
-        
+
         // Fly command
         getCommandRegistry().registerCommand(new FlyCommand(this));
-        
+
         // Repair command
         getCommandRegistry().registerCommand(new RepairCommand(this));
-        
+
         // Time command
         getCommandRegistry().registerCommand(new TimeCommand(this));
-        
+
         // Chat commands
         getCommandRegistry().registerCommand(new MsgCommand(this));
         getCommandRegistry().registerCommand(new ReplyCommand(this));
         getCommandRegistry().registerCommand(new MuteCommand(this));
         getCommandRegistry().registerCommand(new UnmuteCommand(this));
         getCommandRegistry().registerCommand(new IgnoreCommand(this));
-        
+
         // Kit commands
         getCommandRegistry().registerCommand(new KitCommand(this));
         getCommandRegistry().registerCommand(new CreatekitCommand(this));
         getCommandRegistry().registerCommand(new DelkitCommand(this));
-        
+
         // Basic commands
         getCommandRegistry().registerCommand(new HealCommand(this));
         getCommandRegistry().registerCommand(new FeedCommand(this));
         getCommandRegistry().registerCommand(new ClearCommand(this));
-        
-        getLogger().info("Commands registered!");
+
+        LOGGER.atInfo().log("Commands registered!");
     }
-    
+
     private void registerEvents() {
-        getLogger().info("Registering event listeners...");
-        
+        LOGGER.atInfo().log("Registering event listeners...");
+
         // Player events
         getEventRegistry().registerGlobal(PlayerReadyEvent.class, this::onPlayerJoin);
         getEventRegistry().registerGlobal(PlayerQuitEvent.class, this::onPlayerQuit);
@@ -252,88 +254,33 @@ public class HyEssentials extends JavaPlugin {
         getEventRegistry().registerGlobal(EntityDamageEvent.class, this::onEntityDamage);
         getEventRegistry().registerGlobal(PlayerDeathEvent.class, this::onPlayerDeath);
         getEventRegistry().registerGlobal(PlayerRespawnEvent.class, this::onPlayerRespawn);
-        
-        getLogger().info("Event listeners registered!");
+
+        LOGGER.atInfo().log("Event listeners registered!");
     }
-    
-    // Event Handlers
-    
+
     // Utility Methods
-    
     private void broadcastMessage(String message) {
-        // Broadcast to all online players
         for (Player player : getServer().getOnlinePlayers()) {
             player.sendMessage(message);
         }
     }
-    
+
     // Getters
-    
-    public static HyEssentials getInstance() {
-        return instance;
-    }
-    
-    public TaskRunner getTaskRunner() {
-        return taskRunner;
-    }
-    
-    public ConfigManager getConfigManager() {
-        return configManager;
-    }
-    
-    public LanguageManager getLanguageManager() {
-        return languageManager;
-    }
-    
-    public PermissionManager getPermissionManager() {
-        return permissionManager;
-    }
-    
-    public UserDataManager getUserDataManager() {
-        return userDataManager;
-    }
-    
-    public TeleportManager getTeleportManager() {
-        return teleportManager;
-    }
-    
-    public HomeManager getHomeManager() {
-        return homeManager;
-    }
-    
-    public WarpManager getWarpManager() {
-        return warpManager;
-    }
-    
-    public SpawnManager getSpawnManager() {
-        return spawnManager;
-    }
-    
-    public KitManager getKitManager() {
-        return kitManager;
-    }
-    
-    public ChatManager getChatManager() {
-        return chatManager;
-    }
-    
-    public MuteManager getMuteManager() {
-        return muteManager;
-    }
-    
-    public IgnoreManager getIgnoreManager() {
-        return ignoreManager;
-    }
-    
-    public BackManager getBackManager() {
-        return backManager;
-    }
-    
-    public IEconomy getEconomy() {
-        return economy;
-    }
-    
-    public ModuleManager getModuleManager() {
-        return moduleManager;
-    }
+    public static HyEssentials getInstance() { return instance; }
+    public TaskRunner getTaskRunner() { return taskRunner; }
+    public ConfigManager getConfigManager() { return configManager; }
+    public LanguageManager getLanguageManager() { return languageManager; }
+    public PermissionManager getPermissionManager() { return permissionManager; }
+    public UserDataManager getUserDataManager() { return userDataManager; }
+    public TeleportManager getTeleportManager() { return teleportManager; }
+    public HomeManager getHomeManager() { return homeManager; }
+    public WarpManager getWarpManager() { return warpManager; }
+    public SpawnManager getSpawnManager() { return spawnManager; }
+    public KitManager getKitManager() { return kitManager; }
+    public ChatManager getChatManager() { return chatManager; }
+    public MuteManager getMuteManager() { return muteManager; }
+    public IgnoreManager getIgnoreManager() { return ignoreManager; }
+    public BackManager getBackManager() { return backManager; }
+    public IEconomy getEconomy() { return economy; }
+    public ModuleManager getModuleManager() { return moduleManager; }
 }
