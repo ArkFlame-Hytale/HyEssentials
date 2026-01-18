@@ -191,7 +191,7 @@ public class ConfigManager {
     }
     
     public void loadConfig() {
-        File configFile = new File(plugin.getDataFolder(), "config.yml");
+        File configFile = new File(plugin.getDataDirectory(), "config.yml");
         if (!configFile.exists()) {
             createDefaultConfig(configFile);
         }
@@ -231,7 +231,7 @@ public class LanguageManager {
     }
     
     public void loadLanguages() {
-        File langFolder = new File(plugin.getDataFolder(), "lang");
+        File langFolder = new File(plugin.getDataDirectory(), "lang");
         langFolder.mkdirs();
         
         // Load all language files
@@ -242,7 +242,7 @@ public class LanguageManager {
     }
     
     private void loadLanguage(String lang) {
-        File langFile = new File(plugin.getDataFolder(), "lang/messages_" + lang + ".yml");
+        File langFile = new File(plugin.getDataDirectory(), "lang/messages_" + lang + ".yml");
         if (!langFile.exists()) {
             createDefaultLanguage(lang, langFile);
         }
@@ -501,7 +501,7 @@ public class GamemodeCommand extends Command {
         
         Player player = (Player) sender;
         
-        if (!plugin.getPermissionManager().hasPermission(player.getUniqueId(), "essentials.gamemode")) {
+        if (!plugin.getPermissionManager().hasPermission(player.getUuid(), "essentials.gamemode")) {
             player.sendMessage(plugin.getLanguageManager().getMessage(player, "no_permission"));
             return;
         }
@@ -562,7 +562,7 @@ public class TpaCommand extends Command {
         
         Player player = (Player) sender;
         
-        if (!plugin.getPermissionManager().hasPermission(player.getUniqueId(), "essentials.tpa")) {
+        if (!plugin.getPermissionManager().hasPermission(player.getUuid(), "essentials.tpa")) {
             player.sendMessage(plugin.getLanguageManager().getMessage(player, "no_permission"));
             return;
         }
@@ -584,7 +584,7 @@ public class TpaCommand extends Command {
             return;
         }
         
-        plugin.getTeleportManager().sendTpaRequest(player.getUniqueId(), target.getUniqueId());
+        plugin.getTeleportManager().sendTpaRequest(player.getUuid(), target.getUuid());
         
         player.sendMessage(plugin.getLanguageManager().getMessage(player, "tpa_sent")
             .replace("{player}", target.getName()));
@@ -614,7 +614,7 @@ public class HomeCommand extends Command {
         }
         
         Player player = (Player) sender;
-        UUID uuid = player.getUniqueId();
+        UUID uuid = player.getUuid();
         
         if (!plugin.getPermissionManager().hasPermission(uuid, "essentials.home")) {
             player.sendMessage(plugin.getLanguageManager().getMessage(player, "no_permission"));

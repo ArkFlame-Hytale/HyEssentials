@@ -1,6 +1,8 @@
 package com.arkflame.hyessentials;
 
 import com.hypixel.hytale.logger.HytaleLogger;
+import com.hypixel.hytale.server.core.plugin.JavaPlugin;
+import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.arkflame.hyessentials.config.ConfigManager;
 import com.arkflame.hyessentials.config.LanguageManager;
 import com.arkflame.hyessentials.economy.DummyEconomy;
@@ -17,7 +19,6 @@ import com.arkflame.hyessentials.commands.*;
  * @version 1.0.0
  */
 public class HyEssentials extends JavaPlugin {
-
     private static HyEssentials instance;
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
 
@@ -44,6 +45,10 @@ public class HyEssentials extends JavaPlugin {
 
     // Module System
     private ModuleManager moduleManager;
+
+    public HyEssentials(JavaPluginInit init) {
+        super(init);
+    }
 
     @Override
     protected void setup() {

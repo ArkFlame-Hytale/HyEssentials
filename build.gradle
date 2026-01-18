@@ -14,7 +14,7 @@ repositories {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(25)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
@@ -24,7 +24,7 @@ tasks.withType(JavaCompile).configureEach {
 
 dependencies {
     // Libraries
-    compileOnly name: 'HytaleServer'
+    compileOnly files("${rootDir}/libraries/HytaleServer.jar")
     
     // Tests
     testImplementation platform('org.junit:junit-bom:5.10.0')

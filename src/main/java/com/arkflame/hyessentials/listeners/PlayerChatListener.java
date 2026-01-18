@@ -5,7 +5,7 @@ public class PlayerChatListener {
     
     private void onPlayerChat(PlayerChatEvent event) {
         Player player = event.getPlayer();
-        UUID uuid = player.getUniqueId();
+        UUID uuid = player.getUuid();
         
         // Check if muted
         if (muteManager.isMuted(uuid)) {

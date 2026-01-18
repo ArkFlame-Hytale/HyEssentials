@@ -5,6 +5,8 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.arkflame.hyessentials.HyEssentials;
+import com.hypixel.hytale.builtin.hytalegenerator.fields.FastNoiseLite.Vector3;
+import com.hypixel.hytale.server.core.entity.entities.Player;
 
 public class TeleportManager {
     private final HyEssentials plugin;
@@ -17,7 +19,7 @@ public class TeleportManager {
     }
     
     public void requestTeleport(Player player, Vector3 destination, TeleportType type) {
-        UUID uuid = player.getUniqueId();
+        UUID uuid = player.getUuid();
         
         // Check cooldown
         if (isOnCooldown(uuid)) {
@@ -50,7 +52,7 @@ public class TeleportManager {
     
     private void executeTeleport(Player player, Vector3 destination) {
         // Store current location for /back
-        plugin.getBackManager().addLocation(player.getUniqueId(), player.getPosition());
+        plugin.getBackManager().addLocation(player.getUuid(), player.getPosition());
         
         player.setPosition(destination);
         player.sendMessage(plugin.getLanguageManager().getMessage(player, "teleport_success"));

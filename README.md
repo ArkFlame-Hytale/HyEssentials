@@ -119,7 +119,7 @@ HyEssentials is built for extensibility. You can hook into the module system or 
 
 **Example: Checking for Permissions**
 ```java
-if (plugin.getPermissionManager().hasPermission(player.getUniqueId(), "essentials.fly")) {
+if (plugin.getPermissionManager().hasPermission(player.getUuid(), "essentials.fly")) {
     // Logic here
 }
 ```

@@ -16,7 +16,7 @@ public class KitManager {
     
     public KitManager(HyEssentials plugin) {
         this.plugin = plugin;
-        this.kitsFile = new File(plugin.getDataFolder(), "kits.yml");
+        this.kitsFile = new File(plugin.getDataDirectory(), "kits.yml");
     }
     
     public void load() {

@@ -3,6 +3,7 @@ package com.arkflame.hyessentials.managers;
 import java.util.UUID;
 
 import com.arkflame.hyessentials.HyEssentials;
+import com.hypixel.hytale.server.core.entity.entities.Player;
 
 public class ChatManager {
     private final HyEssentials plugin;
@@ -12,7 +13,7 @@ public class ChatManager {
     }
     
     public String formatChat(Player player, String message) {
-        UUID uuid = player.getUniqueId();
+        UUID uuid = player.getUuid();
         
         // Get player's group
         String groupName = plugin.getPermissionManager().getGroup(uuid);
@@ -30,7 +31,7 @@ public class ChatManager {
             format = format.replace("{prefix}", "").replace("{suffix}", "");
         }
         
-        format = format.replace("{player}", player.getName())
+        format = format.replace("{player}", player.getDisplayName())
                        .replace("{message}", message);
         
         // Handle color permissions

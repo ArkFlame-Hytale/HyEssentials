@@ -1,7 +1,5 @@
 package com.arkflame.hyessentials.tasks;
 
-public package com.arkflame.hyessentials.tasks;
-
 import com.arkflame.hyessentials.HyEssentials;
 
 import java.util.concurrent.*;
@@ -162,6 +160,4 @@ public class TaskRunner {
             }
         }
     }
-} {
-    
 }

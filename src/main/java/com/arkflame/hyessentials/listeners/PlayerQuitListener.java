@@ -1,9 +1,13 @@
 package com.arkflame.hyessentials.listeners;
 
+import java.util.UUID;
+
+import com.hypixel.hytale.server.core.entity.entities.Player;
+
 public class PlayerQuitListener {
     private void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        UUID uuid = player.getUniqueId();
+        UUID uuid = player.getUuid();
         
         // Custom leave message
         if (configManager.isLeaveMessageEnabled()) {

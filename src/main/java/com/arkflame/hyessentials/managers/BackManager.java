@@ -3,8 +3,10 @@ package com.arkflame.hyessentials.managers;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.arkflame.hyessentials.HyEssentials;
+import com.hypixel.hytale.builtin.hytalegenerator.fields.FastNoiseLite.Vector3;
 
 public class BackManager {
     private final HyEssentials plugin;

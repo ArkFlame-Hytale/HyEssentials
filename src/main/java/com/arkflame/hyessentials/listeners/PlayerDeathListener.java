@@ -8,6 +8,6 @@ public class PlayerDeathListener {
         Vector3 deathLocation = player.getPosition();
         
         // Store death location for /back
-        backManager.addLocation(player.getUniqueId(), deathLocation);
+        backManager.addLocation(player.getUuid(), deathLocation);
     }
 }

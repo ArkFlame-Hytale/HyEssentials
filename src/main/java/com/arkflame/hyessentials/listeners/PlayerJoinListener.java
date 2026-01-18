@@ -1,9 +1,28 @@
 package com.arkflame.hyessentials.listeners;
 
+import java.util.UUID;
+
+import com.arkflame.hyessentials.managers.UserDataManager;
+import com.arkflame.hyessentials.tasks.TaskRunner;
+import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
+
 public class PlayerJoinListener {
+    private TaskRunner taskRunner;
+    private UserDataManager userDataManager;
+    private ConfigManager configManager;
+    private LanguageManager languageManager;
+    
+    public PlayerJoinListener(TaskRunner taskRunner, UserDataManager userDataManager, ConfigManager configManager, LanguageManager languageManager) {
+        this.taskRunner = taskRunner;
+        this.userDataManager = userDataManager;
+        this.configManager = configManager;
+        this.languageManager = languageManager;
+    }
+
     private void onPlayerJoin(PlayerReadyEvent event) {
         Player player = event.getPlayer();
-        UUID uuid = player.getUniqueId();
+        UUID uuid = player.getUuid();
         
         // Load player data asynchronously
         taskRunner.runAsync(() -> {

@@ -17,7 +17,7 @@ public class PermissionManager {
     
     public PermissionManager(HyEssentials plugin) {
         this.plugin = plugin;
-        this.groupsFile = new File(plugin.getDataFolder(), "groups.yml");
+        this.groupsFile = new File(plugin.getDataDirectory(), "groups.yml");
     }
     
     public void load() {

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.arkflame.hyessentials.HyEssentials;
+import com.hypixel.hytale.builtin.hytalegenerator.fields.FastNoiseLite.Vector3;
 
 public class WarpManager {
     private final HyEssentials plugin;
@@ -13,7 +14,7 @@ public class WarpManager {
     
     public WarpManager(HyEssentials plugin) {
         this.plugin = plugin;
-        this.warpsFile = new File(plugin.getDataFolder(), "warps.yml");
+        this.warpsFile = new File(plugin.getDataDirectory(), "warps.yml");
     }
     
     public void load() {

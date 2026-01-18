@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.arkflame.hyessentials.HyEssentials;
+
 public class UserDataManager {
     private final HyEssentials plugin;
     private final File userDataFolder;
@@ -12,7 +14,7 @@ public class UserDataManager {
     
     public UserDataManager(HyEssentials plugin) {
         this.plugin = plugin;
-        this.userDataFolder = new File(plugin.getDataFolder(), "userdata");
+        this.userDataFolder = new File(plugin.getDataDirectory(), "userdata");
         userDataFolder.mkdirs();
     }
     

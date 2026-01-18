@@ -1,6 +1,9 @@
 package com.arkflame.hyessentials.managers;
 
+import java.io.File;
+
 import com.arkflame.hyessentials.HyEssentials;
+import com.hypixel.hytale.builtin.hytalegenerator.fields.FastNoiseLite.Vector3;
 
 public class SpawnManager {
     private final HyEssentials plugin;
@@ -9,7 +12,7 @@ public class SpawnManager {
     
     public SpawnManager(HyEssentials plugin) {
         this.plugin = plugin;
-        this.spawnFile = new File(plugin.getDataFolder(), "spawn.yml");
+        this.spawnFile = new File(plugin.getDataDirectory(), "spawn.yml");
     }
     
     public void load() {
